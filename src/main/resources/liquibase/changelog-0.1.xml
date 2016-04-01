@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet id="0.1-1 create profiles and locations table on semicolon"
+		author="Theerasak Meebunrot">
+		<createTable tableName="w_profiles">
+			<column name="id" type="int">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="email" type="varchar(128)">
+				<constraints unique="true" />
+			</column>
+			<column name="password" type="varchar(256)" />
+			<column name="name" type="varchar(256)" />
+		</createTable>
+		<createTable tableName="w_locations">
+			<column name="create_time" type="date">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="user_id" type="int">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="latitude" type="float" />
+			<column name="longitude" type="float" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="0.1-2 add foreignkey in location table column user_id"
+		author="Theerasak Meebunrot">
+		<addForeignKeyConstraint constraintName="fk_user_id"
+			referencedTableName="w_profiles" baseColumnNames="user_id"
+			baseTableName="w_locations" referencedColumnNames="id" />
+	</changeSet>
+</databaseChangeLog>
